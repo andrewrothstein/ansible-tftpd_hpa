@@ -1,0 +1,21 @@
+---
+# tasks file for tftpd-hpa
+- name: install packages
+  become : yes
+  become_user : root
+  package: name={{item}} state=present
+  with_items:
+    - tftpd-hpa
+
+- name: configure
+  become : yes
+  become_user : root
+  with_items:
+    - etc/default/tftpd-hpa
+  template: >-
+    src={{item}}.j2
+    dest=/{{item}}
+    mode=0644
+
+- name: start tftpd-hpa service
+  service: name=tftpd-hpa state=started enabled=yes

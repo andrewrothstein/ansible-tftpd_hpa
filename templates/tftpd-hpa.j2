@@ -1,0 +1,5 @@
+# /etc/default/tftpd-hpa
+TFTP_USERNAME={{ tftp_username | default("tftp") | quote }}
+TFTP_DIRECTORY={{ tftp_directory | default("/var/lib/tftpboot") | quote }}
+TFTP_ADDRESS={{ tftp_address | default("[::]:69") | quote }}
+TFTP_OPTIONS={{ tftp_options | default("--secure") | quote }}

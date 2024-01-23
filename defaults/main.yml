@@ -1,6 +1,8 @@
 ---
 # defaults file for tftpd-hpa
-tftp_username : tftp
-tftp_directory : /var/lib/tftpboot
-tftp_address : '[::]:69'
-tftp_options : '--secure'
+tftpd_hpa_config:
+  enabled: true
+#  username: tftp
+#  directory: /var/lib/tftpboot
+#  address: '[::]:69'
+#  options: '--secure'

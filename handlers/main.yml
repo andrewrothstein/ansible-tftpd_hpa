@@ -1,2 +1,9 @@
 ---
 # handlers file for tftpd-hpa
+- name: TFTP-HPA reconfigured
+  become: true
+  become_user: root
+  when: tftpd_hpa_config.enabled
+  ansible.builtin.service:
+    name: tftpd-hpa
+    state: restarted

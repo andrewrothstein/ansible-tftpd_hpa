@@ -1,4 +1,10 @@
 ---
-- hosts: all
-  roles:
-    - { role: '.' }
+- name: Testing andrewrothstein.tftpd_hpa
+  hosts: all
+  vars:
+    tftpd_hpa_config:
+      enabled: false
+  tasks:
+    - name: Installing andrewrothstein.tftpd_hpa
+      ansible.builtin.include_role:
+        name: '{{ playbook_dir }}'

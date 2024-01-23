@@ -1,2 +1,3 @@
 ---
 # vars file for tftpd-hpa
+tftpd_hpa_service_enabled: true

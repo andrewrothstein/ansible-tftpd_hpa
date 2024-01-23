@@ -1,21 +1,29 @@
 ---
-# tasks file for tftpd-hpa
-- name: install packages
-  become : yes
-  become_user : root
-  package: name={{item}} state=present
-  with_items:
-    - tftpd-hpa
+# tasks file for tftpd_hpa
+- name: Installing os packages
+  become: true
+  become_user: root
+  ansible.builtin.package:
+    name: '{{ tftpd_hpa_pkgs | default(["tftpd-hpa"]) }}'
+    state: present
 
-- name: configure
-  become : yes
-  become_user : root
+- name: Configuring...
+  become: true
+  become_user: root
   with_items:
-    - etc/default/tftpd-hpa
-  template: >-
-    src={{item}}.j2
-    dest=/{{item}}
-    mode=0644
+    - f: tftpd-hpa
+      d: /etc/default
+  ansible.builtin.template:
+    src: '{{ item.f }}.j2'
+    dest: '{{ item.d }}/{{ item.f }}'
+    mode: '644'
+  notify: TFTP-HPA reconfigured
 
-- name: start tftpd-hpa service
-  service: name=tftpd-hpa state=started enabled=yes
+- name: Start and enable the tftpd-hpa service
+  become: true
+  become_user: root
+  when: tftpd_hpa_config.enabled
+  ansible.builtin.service:
+    name: tftpd-hpa
+    state: started
+    enabled: true
